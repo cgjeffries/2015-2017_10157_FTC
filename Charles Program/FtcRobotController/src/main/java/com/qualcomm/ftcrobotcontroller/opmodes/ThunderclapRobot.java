@@ -75,6 +75,7 @@ public class ThunderclapRobot extends OpMode {
 
         claw1 = hardwareMap.servo.get("servo_1");
         claw2 = hardwareMap.servo.get("servo_2");
+        claw2.setDirection(Servo.Direction.REVERSE);
 
         // assign the starting position of the wrist and claw
         clawPosition = 0.2;
@@ -150,7 +151,7 @@ public class ThunderclapRobot extends OpMode {
 
         // write position values to the wrist and claw servo
         claw1.setPosition(clawPosition);
-        claw2.setPosition(-clawPosition);
+        claw2.setPosition(clawPosition);
 
         motorArm.setPower(armPower);
 
@@ -161,11 +162,14 @@ public class ThunderclapRobot extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        telemetry.addData("Text", "*** Robot Data***");
+        double temp2 = 0;
+        temp2 = motorRightRear.getPower();
+        //telemetry.addData("Text", "*** Robot Data***");
   //      telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
-        telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        //telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
+        //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
+        //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        telemetry.addData("", temp2);
 
     }
 

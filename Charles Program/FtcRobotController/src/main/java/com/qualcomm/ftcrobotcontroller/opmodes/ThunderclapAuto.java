@@ -16,7 +16,8 @@ public class ThunderclapAuto extends LinearOpMode {
     private int encoderValueRight = 0;
     private int encoderValueLeft = 0;
     private int temp = 0;
-    private int previousValue = 0;
+    private int previousValueRight = 0;
+    private int previousValueLeft = 0;
     private boolean encoderReset = true;
 
     DcMotor motorRight;
@@ -46,12 +47,12 @@ public class ThunderclapAuto extends LinearOpMode {
                         encoderReset = false;
                     }
                     else{
-                        temp = motorRight.getCurrentPosition() - previousValue;
-                        previousValue = motorRight.getCurrentPosition();
+                        temp = motorRight.getCurrentPosition() - previousValueRight;
+                        previousValueRight = motorRight.getCurrentPosition();
                         encoderValueRight = encoderValueRight + temp;
 
-                        temp = motorLeft.getCurrentPosition() - previousValue;
-                        previousValue = motorLeft.getCurrentPosition();
+                        temp = motorLeft.getCurrentPosition() - previousValueLeft;
+                        previousValueLeft = motorLeft.getCurrentPosition();
                         encoderValueLeft = encoderValueLeft + temp;
                     }
 
@@ -136,6 +137,8 @@ public class ThunderclapAuto extends LinearOpMode {
             telemetry.addData("Adjusted encoder value left", encoderValueLeft);
             telemetry.addData("Real encoder value right", motorRight.getCurrentPosition());
             telemetry.addData("Adjusted encoder value right", encoderValueRight);
+
+            //telemetry.addData();
             sleep(10);
         }
 

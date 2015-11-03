@@ -73,6 +73,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Charles Tank Drive", TankDrive.class);
     manager.register("Charles Auton", CharlesAuton.class);
     manager.register("encoder test", ThunderclapAuto.class);
+    manager.register("Main tele op", ThunderclapRobot.class);
 
     /*
      * The following example op modes are designed to work with a K9-style robot.
