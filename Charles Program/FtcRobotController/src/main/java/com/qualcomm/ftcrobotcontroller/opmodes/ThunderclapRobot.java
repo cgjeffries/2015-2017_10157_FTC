@@ -71,7 +71,9 @@ public class ThunderclapRobot extends OpMode {
         motorLeftRear = hardwareMap.dcMotor.get("motor_LR");
         motorArm = hardwareMap.dcMotor.get("motor_Arm");
         motorLeftFront.setDirection(DcMotor.Direction.REVERSE);
-        motorLeftRear.setDirection(DcMotor.Direction.REVERSE);
+        //motorLeftRear.setDirection(DcMotor.Direction.REVERSE);
+        motorRightRear.setDirection(DcMotor.Direction.REVERSE);
+        motorRightFront.setDirection(DcMotor.Direction.REVERSE);
 
         claw1 = hardwareMap.servo.get("servo_1");
         claw2 = hardwareMap.servo.get("servo_2");
