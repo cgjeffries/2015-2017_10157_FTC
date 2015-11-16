@@ -19,6 +19,8 @@ public class ThunderclapAuto extends LinearOpMode {
     private int previousValueRight = 0;
     private int previousValueLeft = 0;
     private boolean encoderReset = true;
+    private float kP = 0.0F;
+    private float kD = 0.0F;
 
     DcMotor motorRight;
     DcMotor motorLeft;
@@ -64,6 +66,23 @@ public class ThunderclapAuto extends LinearOpMode {
                 }
             }
         }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+
+
+
+                    try {
+                        sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
 
 
         int temp = 0;
