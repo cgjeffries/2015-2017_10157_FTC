@@ -128,24 +128,27 @@ public class ThunderclapRobot extends OpMode {
         // update the position of the arm.
 
         // update the position of the claw
-        if (gamepad1.x) {
+        if (gamepad1.left_bumper) {
             clawPosition += clawDelta;
         }
-        else if (gamepad1.b) {
+        else if (gamepad1.right_bumper) {
             clawPosition -= clawDelta;
         }
 
         //arm code
 
+
         if((armDown < 0.05 && armUp < 0.05) || (armDown > 0.05 && armUp > 0.05)){
-            armPower = 0.025;
+            armPower = -0.05;
         }
         else if(armDown > 0.05){
-            armPower = -(armDown / 4);
+            armPower = -(armDown / 2);
         }
         else if(armUp > 0.05){
-            armPower = (armUp / 2);
+            armPower = (armUp / 5);
         }
+
+
 
 
         // clip the position values so that they never exceed their allowed range.
