@@ -20,8 +20,8 @@ public class ThunderclapAuto extends LinearOpMode {
     private int previousValueRight = 0;
     private int previousValueLeft = 0;
     private boolean encoderReset = true;
-    private float Kp = 0.0002F;
-    private float Kd = 0.0F;
+    private float Kp = 0.00003F;
+    private float Kd = 0.000F;
     private float PDOut = 0.0F;
     private int PDIn = 0;
     private boolean done = false;
@@ -58,10 +58,10 @@ public class ThunderclapAuto extends LinearOpMode {
         //motorRightRear.setDirection(DcMotor.Direction.REVERSE);
         //motorRightFront.setDirection(DcMotor.Direction.REVERSE);
 
-        claw1 = hardwareMap.servo.get("servo_1");
-        claw2 = hardwareMap.servo.get("servo_2");
-        claw2.setDirection(Servo.Direction.REVERSE);
-        gamepad1.setJoystickDeadzone(0.05F);
+        //claw1 = hardwareMap.servo.get("servo_1");
+        //claw2 = hardwareMap.servo.get("servo_2");
+        //claw2.setDirection(Servo.Direction.REVERSE);
+        //gamepad1.setJoystickDeadzone(0.05F);
 
 
 
@@ -102,6 +102,7 @@ public class ThunderclapAuto extends LinearOpMode {
             public void run() {
                 error = 0;
                 previousError = 0;
+                float temp = 0;
                 while (opModeIsActive()) {
                     if(PDEnabled == true)
                     {
@@ -110,7 +111,17 @@ public class ThunderclapAuto extends LinearOpMode {
                         derivative = error - previousError;
 
                         previousError = error;
-                        PDOut = (error * Kp) + (derivative * Kd);
+                        temp = (error * Kp) + (derivative * Kd);
+                        PDIn = encoderValueLeft;
+                        if(temp > 1.0){
+
+                            temp = 1.0F;
+                        }
+                        else if(temp < -1.0){
+
+                            temp = -1.0F;
+                        }
+                        PDOut = temp;
                     }
 
                     try {
@@ -130,7 +141,7 @@ public class ThunderclapAuto extends LinearOpMode {
 
                 while(true)
                 {
-                    telemetry.addData("encoder position", motorLeftRear.getCurrentPosition() );
+                    telemetry.addData("encoder position", encoderValueLeft);
                 }
 
             }
@@ -146,9 +157,9 @@ public class ThunderclapAuto extends LinearOpMode {
                     int count = 0;
 
                     while (on) {
-                        if (error < 1000 && count < 200) {
+                        if (error < 100 && count < 200) {
                             count++;
-                        } else if (error < 1000 && count >= 200) {
+                        } else if (error < 100 && count >= 200) {
                             on = false;
                             done = true;
                         }
@@ -184,11 +195,12 @@ public class ThunderclapAuto extends LinearOpMode {
         int temp = 0;
         float power = 0.0F;
 
-        target = 24000;
+        target = 10000;
 
         done = false;
+        encoderValueLeft = 0;
 
-        while(opModeIsActive() && !done)
+        while(opModeIsActive())
         {
             PDIn = encoderValueLeft;
             if(PDOut > 1.0){
@@ -205,7 +217,7 @@ public class ThunderclapAuto extends LinearOpMode {
             //motorRightRear.setPower(PDOut);
             //motorLeftFront.setPower(PDOut);
             //motorRightFront.setPower(PDOut);
-            telemetry.addData("PDOut:", PDOut);
+            telemetry.addData("PDOut:", opModeIsActive());
             telemetry.addData("error:", error);
             sleep(10);
         }
