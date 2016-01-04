@@ -20,18 +20,20 @@ public class ThunderclapAuto extends LinearOpMode {
     private int previousValueRight = 0;
     private int previousValueLeft = 0;
     private boolean encoderReset = true;
-    private float Kp = 0.00003F;
+    private float Kp = 0.00006F;
     private float Kd = 0.000F;
     private float PDOut = 0.0F;
     private int PDIn = 0;
     private boolean done = false;
     private boolean PDEnabled = true;
-    private int target = 0;
+    private int target = 9001;
     private float error = 0;
     private float previousError = 0;
     private float derivative = 0;
-    static int t = 0;
+    private static int t = 0;
     private boolean issomethingwrong = false;
+    private int count = 0;
+    private int test = 0;
 
     DcMotor motorRightFront;
     DcMotor motorLeftFront;
@@ -138,11 +140,23 @@ public class ThunderclapAuto extends LinearOpMode {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                while(true)
-                {
-                    telemetry.addData("encoder position", encoderValueLeft);
+                error = 0;
+                previousError = 0;
+                float temp = 0;
+                while (opModeIsActive()) {
+                    
+                    telemetry.addData("count", count);
+                    telemetry.addData("opModeIsActive", opModeIsActive());
+                    telemetry.addData("PDout", PDOut);
+                    telemetry.addData("power", motorLeftRear.getPower());
+                    telemetry.addData("test", test);
+                    try {
+                        sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+                issomethingwrong = true;
 
             }
         }).start();
@@ -151,10 +165,26 @@ public class ThunderclapAuto extends LinearOpMode {
             @Override
             public void run() {
 
+                while(true)
+                {
+
+                }
+
+            }
+        }).start();
+
+        //new Thread((Runnable) () ){
+
+        //}
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
                 while(true) {
 
                     boolean on = true;
-                    int count = 0;
+
 
                     while (on) {
                         if (error < 100 && count < 200) {
@@ -199,9 +229,9 @@ public class ThunderclapAuto extends LinearOpMode {
 
         done = false;
         encoderValueLeft = 0;
-
-        while(opModeIsActive())
+        while(opModeIsActive() && !done)
         {
+            test++;
             PDIn = encoderValueLeft;
             if(PDOut > 1.0){
 
@@ -217,7 +247,7 @@ public class ThunderclapAuto extends LinearOpMode {
             //motorRightRear.setPower(PDOut);
             //motorLeftFront.setPower(PDOut);
             //motorRightFront.setPower(PDOut);
-            telemetry.addData("PDOut:", opModeIsActive());
+            //telemetry.addData("PDOut:", opModeIsActive());
             telemetry.addData("error:", error);
             sleep(10);
         }
