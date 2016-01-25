@@ -50,6 +50,7 @@ public class ThunderclapAuto extends LinearOpMode {
             sleep(1);
         }
 
+
         //motorRightFront = hardwareMap.dcMotor.get("motor_RF");
         //motorLeftFront = hardwareMap.dcMotor.get("motor_LF");
         //motorRightRear = hardwareMap.dcMotor.get("motor_RR");
@@ -167,7 +168,13 @@ public class ThunderclapAuto extends LinearOpMode {
 
                 while(true)
                 {
+                    target += gamepad1.left_stick_y * 100;
 
+                    try {
+                        sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -229,7 +236,7 @@ public class ThunderclapAuto extends LinearOpMode {
 
         done = false;
         encoderValueLeft = 0;
-        while(opModeIsActive() && !done)
+        while(opModeIsActive())
         {
             test++;
             PDIn = encoderValueLeft;
