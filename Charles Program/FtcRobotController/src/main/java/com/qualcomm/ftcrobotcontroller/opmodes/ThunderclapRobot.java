@@ -21,8 +21,8 @@ public class ThunderclapRobot extends OpMode {
     double clawPosition;
     double clawDelta;
 
-    final static double CLAW_MIN_RANGE  = 0.20;
-    final static double CLAW_MAX_RANGE  = 0.7;
+    final static double CLAW_MIN_RANGE  = 0.4;
+    final static double CLAW_MAX_RANGE  = 0.6;
 
     private void getEncoderValue(){
 
@@ -30,7 +30,8 @@ public class ThunderclapRobot extends OpMode {
     /*
      * Note: the configuration of the servos is such that
      * as the arm servo approaches 0, the arm position moves up (away from the floor).
-     * Also, as the claw servo approaches 0, the claw opens up (drops the game element).
+     * Also, as the claw servo approaches 0, the claw opens up
+     * (drops the game element).
      */
 
     /**
@@ -154,9 +155,14 @@ public class ThunderclapRobot extends OpMode {
         // clip the position values so that they never exceed their allowed range.
         clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 
+        double claw1value = clawPosition - 0.25;
+        claw1value = Range.clip(claw1value, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
+
         // write position values to the wrist and claw servo
         claw1.setPosition(clawPosition);
         claw2.setPosition(clawPosition);
+        //claw1.setPosition(0);
+        //claw2.setPosition(0);
 
         motorArm.setPower(armPower);
 
@@ -174,7 +180,8 @@ public class ThunderclapRobot extends OpMode {
         //telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
         //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
-        telemetry.addData("", temp2);
+        telemetry.addData("claw1value", claw1value);
+        telemetry.addData("clawPosition", clawPosition);
 
     }
 
